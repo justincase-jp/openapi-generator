@@ -603,6 +603,8 @@ public class KotlinSpringServerCodegen extends AbstractKotlinCodegen
                 (Mustache.Lambda) (fragment, writer) -> writer.write(fragment.execute().replaceAll("\"", Matcher.quoteReplacement("\\\""))));
         additionalProperties.put("lambdaRemoveLineBreak",
                 (Mustache.Lambda) (fragment, writer) -> writer.write(fragment.execute().replaceAll("[\\r\\n]", "")));
+
+        this.useOneOfInterfaces = true;
     }
 
     @Override
@@ -884,5 +886,17 @@ public class KotlinSpringServerCodegen extends AbstractKotlinCodegen
     protected boolean needToImport(String type) {
         // provides extra protection against improperly trying to import language primitives and java types
         return !type.startsWith("org.springframework.") && super.needToImport(type);
+    }
+
+    @Override
+    public void addImportsToOneOfInterface(List<Map<String, String>> imports) {
+        for (String i : Arrays.asList("JsonSubTypes", "JsonTypeInfo")) {
+            Map<String, String> oneImport = new HashMap<String, String>() {{
+                put("import", importMapping.get(i));
+            }};
+            if (!imports.contains(oneImport)) {
+                imports.add(oneImport);
+            }
+        }
     }
 }

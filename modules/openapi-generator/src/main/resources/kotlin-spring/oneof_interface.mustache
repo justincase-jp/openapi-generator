@@ -1,0 +1,11 @@
+{{>generatedAnnotation}}{{>typeInfoAnnotation}}
+interface {{classname}} {{#vendorExtensions.x-implements}}{{#-first}}: {{{.}}}{{/-first}}{{^-first}}, {{{.}}}{{/-first}}{{/vendorExtensions.x-implements}} {
+    {{#discriminator}}
+    {{#requiredVars}}
+        {{>interfaceReqVar}}
+    {{/requiredVars}}
+    {{#optionalVars}}
+        {{>interfaceOptVar}}
+    {{/optionalVars}}
+    {{/discriminator}}
+}

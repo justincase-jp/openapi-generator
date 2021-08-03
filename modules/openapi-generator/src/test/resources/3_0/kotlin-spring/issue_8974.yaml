@@ -1,0 +1,52 @@
+openapi: 3.0.3
+info:
+  version: 1.0.0
+  title: one-of-interface-generation-issue
+paths:
+  /test:
+    get:
+      operationId: get-test
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                title: SampleResponse
+                type: object
+                properties:
+                  test:
+                    oneOf:
+                      - $ref: '#/components/schemas/Type1Schema'
+                      - $ref: '#/components/schemas/Type2Schema'
+                    discriminator:
+                      propertyName: type
+                      mapping:
+                        type1: '#/components/schemas/Type1Schema'
+                        type2: '#/components/schemas/Type2Schema'
+                required:
+                  - test
+components:
+  schemas:
+    Type1Schema:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+            - type1
+        value1:
+          type: string
+      required:
+        - type
+    Type2Schema:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+            - type2
+        value2:
+          type: string
+      required:
+        - type
