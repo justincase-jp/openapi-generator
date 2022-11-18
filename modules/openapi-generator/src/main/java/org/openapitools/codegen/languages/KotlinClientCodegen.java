@@ -484,6 +484,8 @@ public class KotlinClientCodegen extends AbstractKotlinCodegen {
                 supportingFiles.add(new SupportingFile("auth/HttpBasicAuth.kt.mustache", authFolder, "HttpBasicAuth.kt"));
             }
         }
+
+        this.useOneOfInterfaces = true;
     }
 
     private void processDateLibrary() {
